@@ -1,4 +1,10 @@
 {
+  "name": "pagina-estetica",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx serve -l 3000",
+    "start": "npx serve -l 3000"
+  },
   "dependencies": {
     "image-size": "^2.0.2",
     "sharp": "^0.35.1",

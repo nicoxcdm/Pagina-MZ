@@ -14,6 +14,19 @@ const WHATSAPP_CONFIG = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Limpieza automática preventiva de fotos pesadas base64 en localStorage (ahora usamos archivos en assets/)
+    try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && (k.startsWith('speaker_photo_') || k.startsWith('speaker_gallery_'))) {
+                keysToRemove.push(k);
+            }
+        }
+        keysToRemove.forEach(k => localStorage.removeItem(k));
+    } catch(e) {}
+
     // Helper function to compress images before saving them to localStorage
     const compressImage = (base64Str, maxWidth, maxHeight, quality, callback) => {
         const img = new Image();
@@ -182,6 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar fotos guardadas en localStorage al iniciar la página
     const loadPersistedPhotos = () => {
+        // Las fotos ahora son archivos físicos fijos en assets/, ya no dependen de base64
+        return;
         const images = document.querySelectorAll('img[data-speaker-id]');
         images.forEach(img => {
             const speakerId = img.getAttribute('data-speaker-id');
@@ -312,7 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modalGalleryItems.innerHTML = '';
         
         let galleryItems = [];
-        let savedGallery = localStorage.getItem('speaker_gallery_' + speakerId);
+        if (window.DUAL_SPEAKERS && window.DUAL_SPEAKERS[speakerId]) {
+            galleryItems = window.DUAL_SPEAKERS[speakerId].map(src => ({ type: 'image', src: src }));
+        }
+        let savedGallery = galleryItems.length > 0 ? null : localStorage.getItem('speaker_gallery_' + speakerId);
         if (!savedGallery || savedGallery === 'null' || savedGallery === 'undefined') {
             const baseSpeakerId = speakerId.replace('-disertante', '');
             const relatedSpeakerId = speakerId.endsWith('-disertante') ? baseSpeakerId : `${baseSpeakerId}-disertante`;
@@ -327,11 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Valores por defecto (mockups): foto del disertante, masterclass y fondo hero
             const mainImg = document.querySelector(`img[data-speaker-id="${speakerId}"]`);
-            const mainSrc = mainImg ? mainImg.src : 'assets/masterclass.png';
+            const mainSrc = mainImg ? mainImg.getAttribute('src') : 'assets/logo2.png';
             galleryItems = [
                 { type: 'image', src: mainSrc },
-                { type: 'image', src: 'assets/masterclass.png' },
-                { type: 'image', src: 'assets/hero-bg.png' }
+                { type: 'image', src: 'assets/logo2.png' }
             ];
         }
         
@@ -349,18 +366,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const embedUrl = getYouTubeEmbedUrl(itemObj.src);
                     element.innerHTML = `
                         <iframe src="${embedUrl}" frameborder="0" allowfullscreen style="width: 100%; height: 100%; border: none;"></iframe>
-                        <button class="delete-gallery-item" data-index="${index}" title="Eliminar video">&times;</button>
+                        
                     `;
                 } else {
                     element.innerHTML = `
                         <video src="${itemObj.src}" controls style="width: 100%; height: 100%; object-fit: cover; background-color: #000;"></video>
-                        <button class="delete-gallery-item" data-index="${index}" title="Eliminar video">&times;</button>
+                        
                     `;
                 }
             } else {
                 element.innerHTML = `
                     <img src="${itemObj.src}" alt="Imagen ${index + 1}">
-                    <button class="delete-gallery-item" data-index="${index}" title="Eliminar imagen">&times;</button>
+                    
                 `;
             }
             modalGalleryItems.appendChild(element);
@@ -591,13 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
         introVideoContainer.appendChild(mediaElement);
         
         // Re-crear y añadir el botón +
-        const changeBtn = document.createElement('button');
-        changeBtn.className = 'upload-photo-btn grid-btn';
-        changeBtn.id = 'change-intro-video-btn';
-        changeBtn.title = 'Cambiar video de presentación';
-        changeBtn.style.cssText = 'top: 10px; right: 10px; width: 32px; height: 32px; font-size: 18px; border-width: 2px;';
-        changeBtn.textContent = '+';
-        introVideoContainer.appendChild(changeBtn);
+        // Botón + removido
     };
 
     // Escuchar click en el botón + para cambiar video usando delegación de eventos
@@ -734,6 +745,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- 8. CAROUSEL DE FOTOS TIPO INSTAGRAM PARA DISERTANTES ---
+    
+    const DUAL_SPEAKERS_PHOTOS = {
+        'marcela-alejandra-disertante': [
+            'assets/speaker-marcela-miguenz.jpg',
+            'assets/speaker-alejandra-cruz.jpg'
+        ],
+        'cristina-rodrigo-disertante': [
+            'assets/speaker-cristina-moro.jpg',
+            'assets/speaker-rodrigo-garcia.jpg'
+        ],
+        'roberto-daniela-disertante': [
+            'assets/speaker-roberto-angeloff.jpg',
+            'assets/speaker-daniela-goette.jpg'
+        ]
+    };
+
     const initSpeakerCarousels = () => {
         const cards = document.querySelectorAll('.speaker-card');
         cards.forEach(card => {
@@ -746,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const speakerId = imgEl.getAttribute('data-speaker-id');
             if (!speakerId) return;
 
-            // Eliminar elementos del slider anteriores para evitar duplicados al recargar
+            // Eliminar elementos del slider anteriores para evitar duplicados
             const oldPrev = imgContainer.querySelector('.speaker-slider-prev');
             const oldNext = imgContainer.querySelector('.speaker-slider-next');
             const oldDots = imgContainer.querySelector('.speaker-slider-dots');
@@ -754,45 +781,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (oldNext) oldNext.remove();
             if (oldDots) oldDots.remove();
 
-            // Obtener lista de imágenes desde el localStorage de la galería
             let images = [];
-            let savedGallery = localStorage.getItem('speaker_gallery_' + speakerId);
 
-            if (savedGallery && savedGallery !== 'null' && savedGallery !== 'undefined') {
-                try {
-                    const galleryItems = JSON.parse(savedGallery);
-                    images = galleryItems
-                        .filter(item => {
-                            if (typeof item === 'string') return true;
-                            return item && item.type === 'image';
-                        })
-                        .map(item => {
-                            if (typeof item === 'string') return item;
-                            return item.src;
-                        });
-                } catch (e) {
-                    console.error('Error al analizar la galería del disertante ' + speakerId, e);
-                }
-            }
-            
-            // Si la galería está vacía en localStorage, usar por defecto:
-            // 1. Su foto principal (ya sea subida o por defecto en el HTML)
-            // 2. assets/masterclass.png
-            // 3. assets/hero-bg.png
-            if (images.length === 0) {
-                let savedMainPhoto = localStorage.getItem('speaker_photo_' + speakerId);
-                if (savedMainPhoto === 'null' || savedMainPhoto === 'undefined' || (savedMainPhoto && savedMainPhoto.trim() === '')) {
-                    savedMainPhoto = null;
-                }
+            // 1. Si es una dupla, cargar SIEMPRE sus 2 fotos reales
+            if (DUAL_SPEAKERS_PHOTOS[speakerId]) {
+                images = [...DUAL_SPEAKERS_PHOTOS[speakerId]];
+            } else {
+                // Para los demás, su foto fija
                 const defaultSrc = imgEl.getAttribute('src') || '';
-                images = [
-                    savedMainPhoto || defaultSrc,
-                    'assets/masterclass.png',
-                    'assets/hero-bg.png'
-                ];
+                if (defaultSrc) images = [defaultSrc];
             }
 
-            // Si hay 1 o menos imágenes, no tiene sentido mostrar controles
+            // Si hay 1 o menos imágenes, no hay nada que desplazar
             if (images.length <= 1) return;
 
             let currentIndex = 0;
@@ -821,8 +821,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Función para actualizar la imagen y el estado del slider
             const updateSlider = (newIndex) => {
-                imgEl.style.transition = 'opacity 0.15s ease';
-                imgEl.style.opacity = 0.3;
+                imgEl.style.transition = 'opacity 0.2s ease';
+                imgEl.style.opacity = 0.2;
                 
                 setTimeout(() => {
                     currentIndex = newIndex;
@@ -861,8 +861,8 @@ document.addEventListener('DOMContentLoaded', () => {
             imgContainer.appendChild(nextBtn);
             imgContainer.appendChild(dotsContainer);
             
-            // Asegurarse de que el src de la imagen sea el correcto del slider (por si acaso cambió)
-            imgEl.src = images[currentIndex];
+            // Establecer la primera foto fija
+            imgEl.src = images[0];
         });
     };
 
