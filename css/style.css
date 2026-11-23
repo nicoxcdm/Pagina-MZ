@@ -1073,3 +1073,36 @@ body.belestetik-theme #main-header .nav-item.active a {
     height: 34px;
     fill: currentColor;
 }
+
+/* ==========================================================================
+   FIRMA DIGITAL - NICOLAS CORDOBA
+   ========================================================================== */
+.footer-signature-bar {
+    width: 100%;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(78, 59, 52, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.developer-signature {
+    font-size: 0.88rem;
+    color: #4A3832;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.35);
+    padding: 6px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(168, 107, 90, 0.2);
+}
+
+.developer-signature strong {
+    color: #2E1F1A;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+}
