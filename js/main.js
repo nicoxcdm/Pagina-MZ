@@ -7,7 +7,7 @@
 const WHATSAPP_CONFIG = {
     // Ingresa el número de WhatsApp con código de país, sin '+' ni espacios
     // Ejemplo: '5491130000000' (Argentina) o '34600000000' (España)
-    phone: "5493874039657",
+    phone: "5493872110233",
     
     // Mensaje predeterminado que se enviará al hacer clic en el botón de entradas
     message: "Hola Belestetik, me gustaría recibir información sobre el evento Belestetik Internacional 2026 y consultar por la compra de entradas."
