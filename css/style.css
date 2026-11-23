@@ -43,12 +43,12 @@
     /* Text Colors */
     --text-white-pure: #FFFFFF;
     --text-white-muted: rgba(255, 255, 255, 0.85);
-    --text-dark-pure: #4E3B34;
-    --text-dark-muted: #7E6961;
+    --text-dark-pure: #2B1E1A;
+    --text-dark-muted: #53403A;
     
     /* Gradients */
     --gradient-peach: linear-gradient(135deg, #F1DDD4 0%, #E2B7A7 50%, #D4A392 100%);
-    --gradient-gold: linear-gradient(135deg, #F1DDD4 0%, #E2B7A7 50%, #D4A392 100%);
+    --gradient-gold: linear-gradient(135deg, #A86B5A 0%, #8C5243 100%);
     --gradient-gold-hover: linear-gradient(135deg, #FFFFFF 0%, #F1DDD4 50%, #E2B7A7 100%);
     --gradient-dark: linear-gradient(180deg, #E2B7A7 0%, #D4A392 100%);
     
@@ -931,4 +931,145 @@ body.belestetik-theme #main-header .nav-item.active a {
     .hero-desc {
         font-size: 1.05rem !important;
     }
+}
+
+/* ==========================================================================
+   MEJORAS DE MARGENES, PADDING, LEGIBILIDAD Y WHATSAPP FLOTANTE
+   ========================================================================== */
+
+/* Mayor contraste para subtítulos y textos con text-gold */
+.text-gold {
+    background: linear-gradient(135deg, #965342 0%, #7A3C2D 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: #8C5243 !important;
+    font-weight: 700 !important;
+}
+
+.section-subtitle {
+    color: #4A3832 !important;
+    font-weight: 400 !important;
+    opacity: 0.95 !important;
+}
+
+/* Grilla de características y tarjetas con generoso padding y márgenes */
+.features-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 35px !important;
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+}
+
+.feature-card {
+    background-color: #FFFFFF !important;
+    border: 1px solid #ECDAD2 !important;
+    border-radius: 18px !important;
+    padding: 45px 35px !important;
+    box-shadow: 0 10px 30px rgba(126, 105, 97, 0.08) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px) !important;
+    border-color: #A86B5A !important;
+    box-shadow: 0 16px 40px rgba(168, 107, 90, 0.16) !important;
+}
+
+.feature-icon-wrapper {
+    margin-bottom: 22px !important;
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50% !important;
+    background-color: #F1DDD4 !important;
+    color: #5C3227 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.feature-card-title {
+    color: #2E1F1A !important;
+    font-size: 1.45rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 14px !important;
+    line-height: 1.3 !important;
+}
+
+.feature-card-desc {
+    color: #53403A !important;
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 25px !important;
+    flex-grow: 1 !important;
+}
+
+.feature-card .btn-premium {
+    margin-top: auto !important;
+    padding: 13px 30px !important;
+}
+
+/* Tarjetas de Valores con texto nítido y legible */
+.value-card-box {
+    background: #FFFFFF !important;
+    border: 1px solid #ECDAD2 !important;
+    border-radius: 16px !important;
+    padding: 30px 25px !important;
+    box-shadow: 0 6px 20px rgba(126, 105, 97, 0.05) !important;
+    transition: transform 0.25s ease, border-color 0.25s ease !important;
+}
+
+.value-card-box:hover {
+    transform: translateY(-4px) !important;
+    border-color: #A86B5A !important;
+}
+
+.value-card-title {
+    color: #2E1F1A !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+.value-card-desc {
+    color: #4A3832 !important;
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+    margin: 0 !important;
+}
+
+/* Botón flotante de WhatsApp */
+.whatsapp-float-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 62px;
+    height: 62px;
+    background-color: #25D366;
+    color: #FFFFFF !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+    z-index: 9999;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+    background-color: #20BA5A;
+}
+
+.whatsapp-float-btn svg {
+    width: 34px;
+    height: 34px;
+    fill: currentColor;
 }
