@@ -601,6 +601,101 @@ header {
     background: #F1DDD4;
 }
 
+/* ==========================================================================
+   TARJETAS RECTANGULARES: QUIÉN SOY & NUESTRA HISTORIA
+   ========================================================================== */
+.rectangular-story-card {
+    background: #FBF7F4;
+    border: 1px solid #ECDAD2;
+    border-radius: 20px;
+    padding: 45px 50px;
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 45px;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(126, 105, 97, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.rectangular-story-card:hover {
+    border-color: #E2B7A7;
+    box-shadow: 0 16px 40px rgba(226, 183, 167, 0.22);
+    transform: translateY(-3px);
+}
+
+.story-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.story-card-photo-slot {
+    width: 100%;
+    height: 100%;
+    min-height: 290px;
+    display: flex;
+}
+
+.photo-placeholder-box {
+    width: 100%;
+    height: 100%;
+    min-height: 290px;
+    background: #FFFFFF;
+    border: 2px dashed #D4A392;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: inset 0 2px 10px rgba(126, 105, 97, 0.03);
+    transition: var(--transition-smooth);
+}
+
+.photo-placeholder-box:hover {
+    background: #FFF9F6;
+    border-color: #A86B5A;
+}
+
+.placeholder-tag {
+    margin-top: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #4E3B34;
+    letter-spacing: 0.02em;
+}
+
+.placeholder-hint {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #7E6961;
+}
+
+.history-highlight-box {
+    background: #F1DDD4;
+    border-left: 4px solid #A86B5A;
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    color: #4E3B34;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .rectangular-story-card {
+        grid-template-columns: 1fr;
+        padding: 30px 24px;
+        gap: 30px;
+    }
+    .story-card-photo-slot,
+    .photo-placeholder-box {
+        min-height: 220px;
+    }
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
