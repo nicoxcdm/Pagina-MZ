@@ -1223,3 +1223,76 @@ body.belestetik-theme #main-header .nav-item.active a {
     border: 0;
     display: block;
 }
+
+/* ==========================================================================
+   ESTILOS DE BOTONES CON ALTO CONTRASTE (ESTILO BOTÓN SÓLIDO Y ELEGANTE)
+   ========================================================================== */
+.btn-premium {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 36px !important;
+    border-radius: 50px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Botón Primario: Terracota cálido con excelente contraste */
+.btn-primary {
+    background: #A86B5A !important;
+    color: #FFFFFF !important;
+    border: 2px solid #A86B5A !important;
+    box-shadow: 0 6px 20px rgba(168, 107, 90, 0.35) !important;
+}
+
+.btn-primary:hover {
+    background: #8F5545 !important;
+    border-color: #8F5545 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 25px rgba(143, 85, 69, 0.45) !important;
+}
+
+/* Botón Secundario: Mismo estilo terracota que el botón de la izquierda a pedido del usuario */
+.btn-secondary {
+    background: #A86B5A !important;
+    color: #FFFFFF !important;
+    border: 2px solid #A86B5A !important;
+    box-shadow: 0 6px 20px rgba(168, 107, 90, 0.35) !important;
+}
+
+.btn-secondary:hover {
+    background: #8F5545 !important;
+    border-color: #8F5545 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 25px rgba(143, 85, 69, 0.45) !important;
+}
+
+/* Enlaces del menú superior en el header: Contraste reforzado */
+header .nav-item a,
+#main-header .nav-item a {
+    color: #2E1F1A !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    transition: color 0.2s ease !important;
+}
+
+header .nav-item a:hover,
+#main-header .nav-item a:hover,
+header .nav-item.active a,
+#main-header .nav-item.active a {
+    color: #8F5545 !important;
+}
+
+header .nav-item a::after,
+#main-header .nav-item a::after {
+    background: #8F5545 !important;
+    height: 2px !important;
+}
