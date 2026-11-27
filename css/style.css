@@ -1370,24 +1370,78 @@ body.belestetik-theme #main-header .nav-item.active a {
     box-shadow: 0 10px 25px rgba(143, 85, 69, 0.45) !important;
 }
 
-/* Enlaces del menú superior en el header: Contraste reforzado */
+/* Enlaces del menú superior en el header: Transformados en botones estilo terracota como solicitó el usuario */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 16px;
+}
+
 header .nav-item a,
 #main-header .nav-item a {
-    color: #2E1F1A !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #A86B5A !important;
+    color: #FFFFFF !important;
+    border: 2px solid #A86B5A !important;
+    border-radius: 50px !important;
+    padding: 10px 22px !important;
+    font-size: 0.82rem !important;
     font-weight: 700 !important;
-    letter-spacing: 0.1em !important;
-    transition: color 0.2s ease !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 4px 15px rgba(168, 107, 90, 0.28) !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
 }
 
 header .nav-item a:hover,
-#main-header .nav-item a:hover,
+#main-header .nav-item a:hover {
+    background: #8F5545 !important;
+    border-color: #8F5545 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(143, 85, 69, 0.4) !important;
+}
+
 header .nav-item.active a,
 #main-header .nav-item.active a {
-    color: #8F5545 !important;
+    background: #8F5545 !important;
+    border-color: #8F5545 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 5px 18px rgba(143, 85, 69, 0.45) !important;
 }
 
 header .nav-item a::after,
 #main-header .nav-item a::after {
-    background: #8F5545 !important;
-    height: 2px !important;
+    display: none !important;
+}
+
+@media (max-width: 992px) {
+    .nav-menu {
+        gap: 10px;
+    }
+    header .nav-item a,
+    #main-header .nav-item a {
+        padding: 8px 16px !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        background-color: #E2B7A7;
+        padding: 40px 20px;
+        gap: 20px;
+    }
+    header .nav-item a,
+    #main-header .nav-item a {
+        width: 220px !important;
+        text-align: center !important;
+        padding: 12px 24px !important;
+        font-size: 0.9rem !important;
+    }
 }
